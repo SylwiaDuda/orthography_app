@@ -60,6 +60,7 @@ public class MainView extends VerticalLayout {
         addClassName("centered-content");
 
         add(textField, button);
+        //test
     }
 
 }
