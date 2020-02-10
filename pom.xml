@@ -182,9 +182,21 @@
                 <configuration>
                     <appName>orthography-app</appName>
                     <processTypes>
-                        <web>java $JAVA_OPTS -cp target/classes:target/dependency/* Main</web>
+                        <web>java $JAVA_OPTS -jar target/orthography-2.0-SNAPSHOT.jar --server.port=$PORT</web>
                     </processTypes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals><goal>copy-dependencies</goal></goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
