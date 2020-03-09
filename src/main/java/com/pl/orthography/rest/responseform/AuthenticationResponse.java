@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 @AllArgsConstructor
 public class AuthenticationResponse implements Serializable {
+    private String userName;
     private String email;
     private String token;
-    private String userName;
 }

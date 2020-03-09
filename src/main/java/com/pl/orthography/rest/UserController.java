@@ -55,8 +55,8 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The user with the e-mail address already exists");
         }
 
-        userService.createUserAccount(registrationData.getUserName(), registrationData.getEmail(), registrationData.getPassword());
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+        User createdUser = userService.createUserAccount(registrationData.getUserName(), registrationData.getEmail(), registrationData.getPassword());
+        HttpStatus httpStatus = createdUser != null ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR;
+        return ResponseEntity.status(httpStatus).body(null);
     }
 }

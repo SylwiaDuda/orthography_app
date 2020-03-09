@@ -1,11 +1,16 @@
 package com.pl.orthography.data.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class User extends BasicEntity {
@@ -61,44 +66,9 @@ public class User extends BasicEntity {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.registrationDate = new Date();
         this.accountState = AccountState.ACTIVE;
         this.exercises = new HashSet<>();
         this.tests = new HashSet<>();
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
-    public Date getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public AccountState getAccountState() {
-        return accountState;
-    }
-
-    public Set<UserExercise> getExercises() {
-        return exercises;
-    }
-
-    public Set<UserTest> getTests() {
-        return tests;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

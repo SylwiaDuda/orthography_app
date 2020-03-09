@@ -7,6 +7,6 @@ import lombok.Getter;
 @Getter
 public class RegistrationForm {
     private String userName;
-    private String  email;
+    private String email;
     private String password;
 }

@@ -6,7 +6,6 @@ import javax.persistence.*;
 @Table(name = "user_exercises")
 public class UserExercise extends BasicEntity{
 
-
     @ManyToOne
     @JoinColumn(name="id_user")
     private User user;
