@@ -33,7 +33,7 @@ public class LoginView extends Div implements BeforeEnterObserver, AfterNavigati
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
         if (SecurityUtils.isUserLoggedIn()) {
-            event.rerouteTo(SampleView.class);
+            event.rerouteTo(UserManagementView.class);
         } else {
             loginOverlay.setOpened(true);
         }

@@ -49,7 +49,7 @@ public class MainView extends AppLayout {
 
     private static Tab[] getAvailableTabs() {
         final List<Tab> tabs = new ArrayList<>();
-        tabs.add(createTab("Master-Detail", SampleView.class));
+        tabs.add(createTab("User Management", UserManagementView.class));
         tabs.add(createTab(createLogOutLink()));
         return tabs.toArray(new Tab[tabs.size()]);
     }

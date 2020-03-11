@@ -1,12 +1,15 @@
 package com.pl.orthography.service;
 
 import com.pl.orthography.data.dao.UserDao;
+import com.pl.orthography.data.entity.AccountState;
 import com.pl.orthography.data.entity.User;
 import com.pl.orthography.data.entity.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -32,6 +35,10 @@ public class UserService {
         return null;
     }
 
+    public List<User> getUsers() {
+        return userDao.findAll();
+    }
+
     @Transactional
     public User createUserAccount(String userName, String email, String password) {
         String encodedPassword = passwordEncoder.encode(password);
@@ -40,9 +47,14 @@ public class UserService {
     }
 
     @Transactional
-    public void createAdminAccount(String userName, String email, String password) {
+    public User createAdminAccount(String userName, String email, String password) {
         String encodedPassword = passwordEncoder.encode(password);
         User user = new User(userName, email, encodedPassword, UserRole.ADMIN);
-        User createdUsed = userDao.save(user);
+        return userDao.save(user);
+    }
+
+    @Transactional
+    public void updateAccountState(String email, AccountState newAccountState){
+       userDao.updateAccountStateBasedOnEmail(email, newAccountState);
     }
 }
