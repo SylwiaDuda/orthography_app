@@ -29,8 +29,11 @@ public class UserService {
 
     public User findUserByEmailAndPassword(String email, String password) {
         User user = userDao.findUserByEmail(email);
-        if (passwordEncoder.matches(password, user.getPassword())) {
-            return user;
+
+        if (user != null) {
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return user;
+            }
         }
         return null;
     }
@@ -54,7 +57,7 @@ public class UserService {
     }
 
     @Transactional
-    public void updateAccountState(String email, AccountState newAccountState){
-       userDao.updateAccountStateBasedOnEmail(email, newAccountState);
+    public void updateAccountState(String email, AccountState newAccountState) {
+        userDao.updateAccountStateBasedOnEmail(email, newAccountState);
     }
 }
