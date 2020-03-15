@@ -44,7 +44,7 @@ public class UserController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userData.getEmail(), userData.getPassword()));
             String token = jwtTokenProvider.createToken(userData.getEmail(), Collections.singletonList(user.getRole().name()));
 
-            return ResponseEntity.status(HttpStatus.OK).body(new AuthenticationResponse(user.getUserName(), user.getEmail(), token));
+            return ResponseEntity.status(HttpStatus.OK).body(new AuthenticationResponse(user.getId(), user.getUserName(), user.getEmail(), token));
         }
     }
 
