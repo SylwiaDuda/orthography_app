@@ -9,7 +9,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -59,5 +62,19 @@ public class UserService {
     @Transactional
     public void updateAccountState(String email, AccountState newAccountState) {
         userDao.updateAccountStateBasedOnEmail(email, newAccountState);
+    }
+
+    public TreeMap<String, Long> getDatesToNumberOfRegistration() {
+        List<Date> registrationDates = userDao.getAllRegistrationDates();
+        List<String> dates = new ArrayList<>();
+        registrationDates.forEach(date -> dates.add(new SimpleDateFormat("dd/MM/yyyy").format(date)));
+        Map<String, Long> result =
+                dates.stream().collect(
+                        Collectors.groupingBy(
+                                Function.identity(), Collectors.counting()
+                        )
+                );
+
+        return new TreeMap<>(result);
     }
 }

@@ -50,6 +50,7 @@ public class MainView extends AppLayout {
     private static Tab[] getAvailableTabs() {
         final List<Tab> tabs = new ArrayList<>();
         tabs.add(createTab("User Management", UserManagementView.class));
+        tabs.add(createTab("Statistics", StatisticsView.class));
         tabs.add(createTab(createLogOutLink()));
         return tabs.toArray(new Tab[tabs.size()]);
     }
