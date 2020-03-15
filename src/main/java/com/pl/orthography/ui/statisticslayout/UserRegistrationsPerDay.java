@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-public class RegistrationUserPerDay extends VerticalLayout {
+public class UserRegistrationsPerDay extends VerticalLayout {
 
     private HorizontalLayout horizontalLayout;
     private DatePicker startDatePicker;
@@ -34,7 +34,7 @@ public class RegistrationUserPerDay extends VerticalLayout {
 
     private UserService userService;
 
-    public RegistrationUserPerDay(UserService userService) {
+    public UserRegistrationsPerDay(UserService userService) {
         this.userService = userService;
 
         createForm();
@@ -102,7 +102,7 @@ public class RegistrationUserPerDay extends VerticalLayout {
                 .withChart(ChartBuilder.get()
                         .withType(Type.line)
                         .withZoom(ZoomBuilder.get()
-                                .withEnabled(false)
+                                .withEnabled(true)
                                 .build())
                         .build())
                 .withStroke(StrokeBuilder.get()

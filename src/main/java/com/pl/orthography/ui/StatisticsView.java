@@ -1,7 +1,7 @@
 package com.pl.orthography.ui;
 
 import com.pl.orthography.service.UserService;
-import com.pl.orthography.ui.statisticslayout.RegistrationUserPerDay;
+import com.pl.orthography.ui.statisticslayout.UserRegistrationsPerDay;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
@@ -19,7 +19,7 @@ public class StatisticsView extends Div implements AfterNavigationObserver {
     public StatisticsView(UserService userService) {
         this.userService = userService;
 
-        add(new RegistrationUserPerDay(userService));
+        add(new UserRegistrationsPerDay(userService));
 
         setWidth("100%");
     }
