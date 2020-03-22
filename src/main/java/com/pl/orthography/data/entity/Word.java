@@ -28,4 +28,8 @@ public class Word extends BasicEntity {
             inverseJoinColumns = {@JoinColumn(name = "id_exercise")}
     )
     private Set<Exercise> exerciseContainingWord = new HashSet<>(0);
+
+    public Word(@NotNull String word) {
+        this.word = word;
+    }
 }
