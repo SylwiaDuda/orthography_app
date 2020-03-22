@@ -1,6 +1,6 @@
 package com.pl.orthography.data.entity;
 
-public enum AccountState {
+public enum AccountStatus {
     ACTIVE,
     DELETED,
     BLOCKED

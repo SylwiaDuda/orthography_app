@@ -1,6 +1,6 @@
 package com.pl.orthography.ui;
 
-import com.pl.orthography.data.entity.AccountState;
+import com.pl.orthography.data.entity.AccountStatus;
 import com.pl.orthography.data.entity.User;
 import com.pl.orthography.service.UserService;
 import com.vaadin.flow.component.AbstractField;
@@ -50,12 +50,12 @@ public class UserManagementView extends Div implements AfterNavigationObserver {
         userGrid.addComponentColumn(this::createAccountStateComboBox).setHeader("Account state");
     }
 
-    private ComboBox<AccountState> createAccountStateComboBox(User user) {
-        ComboBox<AccountState> stateComboBox = new ComboBox<>();
-        stateComboBox.setItems(AccountState.values());
-        stateComboBox.setValue(user.getAccountState());
+    private ComboBox<AccountStatus> createAccountStateComboBox(User user) {
+        ComboBox<AccountStatus> stateComboBox = new ComboBox<>();
+        stateComboBox.setItems(AccountStatus.values());
+        stateComboBox.setValue(user.getAccountStatus());
 
-        stateComboBox.addValueChangeListener((HasValue.ValueChangeListener<AbstractField.ComponentValueChangeEvent<ComboBox<AccountState>, AccountState>>) event -> {
+        stateComboBox.addValueChangeListener((HasValue.ValueChangeListener<AbstractField.ComponentValueChangeEvent<ComboBox<AccountStatus>, AccountStatus>>) event -> {
             if (!event.getOldValue().equals(event.getValue())) {
                 userService.updateAccountState(user.getEmail(), event.getValue());
             }

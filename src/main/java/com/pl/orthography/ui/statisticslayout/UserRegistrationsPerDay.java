@@ -89,15 +89,14 @@ public class UserRegistrationsPerDay extends VerticalLayout {
         }
 
         List<String> categories = getCategories(startDate, endDate);
-        Long[] values = getValues(categories);
+        Integer[] values = getValues(categories);
 
         createLineChart(categories, values);
 
         add(lineChart);
     }
 
-    private void createLineChart(List<String> categories, Long[] values) {
-
+    private void createLineChart(List<String> categories, Integer[] values) {
         lineChart = ApexChartsBuilder.get()
                 .withChart(ChartBuilder.get()
                         .withType(Type.line)
@@ -115,8 +114,9 @@ public class UserRegistrationsPerDay extends VerticalLayout {
                 .withGrid(GridBuilder.get()
                         .withRow(RowBuilder.get()
                                 .withColors("#f3f3f3", "transparent")
-                                .withOpacity(0.5).build()
-                        ).build())
+                                .withOpacity(0.5)
+                                .build())
+                        .build())
                 .withXaxis(XAxisBuilder.get()
                         .withCategories(categories)
                         .build())
@@ -137,13 +137,13 @@ public class UserRegistrationsPerDay extends VerticalLayout {
         return categories;
     }
 
-    private Long[] getValues(List<String> categories) {
+    private Integer[] getValues(List<String> categories) {
         TreeMap<String, Long> datesToNumberOfRegistration = userService.getDatesToNumberOfRegistration();
-        Long[] values = new Long[categories.size()];
+        Integer[] values = new Integer[categories.size()];
 
         for (int i = 0; i < categories.size(); i++) {
             Long numberOfRegistrations = datesToNumberOfRegistration.get(categories.get(i));
-            values[i] = numberOfRegistrations == null ? 0 : numberOfRegistrations;
+            values[i] = numberOfRegistrations == null ? 0 : Math.toIntExact(numberOfRegistrations);
         }
 
         return values;

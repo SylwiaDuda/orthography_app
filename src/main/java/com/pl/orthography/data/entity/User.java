@@ -1,8 +1,5 @@
 package com.pl.orthography.data.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -37,7 +34,7 @@ public class User extends BasicEntity {
     @Column(name = "account_state")
     @Enumerated(EnumType.STRING)
     @NotNull
-    private AccountState accountState;
+    private AccountStatus accountStatus;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UserExercise> exercises = new HashSet<>();
@@ -48,13 +45,13 @@ public class User extends BasicEntity {
     public User() {
     }
 
-    public User(@NotNull String userName, @NotNull String email, @NotNull String password, @NotNull UserRole role, @NotNull Date registrationDate, @NotNull AccountState accountState, Set<UserExercise> exercises, Set<UserTest> tests) {
+    public User(@NotNull String userName, @NotNull String email, @NotNull String password, @NotNull UserRole role, @NotNull Date registrationDate, @NotNull AccountStatus accountStatus, Set<UserExercise> exercises, Set<UserTest> tests) {
         this.userName = userName;
         this.email = email;
         this.password = password;
         this.role = role;
         this.registrationDate = registrationDate;
-        this.accountState = accountState;
+        this.accountStatus = accountStatus;
         this.exercises = exercises;
         this.tests = tests;
     }
@@ -65,7 +62,7 @@ public class User extends BasicEntity {
         this.password = password;
         this.role = role;
         this.registrationDate = new Date();
-        this.accountState = AccountState.ACTIVE;
+        this.accountStatus = AccountStatus.ACTIVE;
         this.exercises = new HashSet<>();
         this.tests = new HashSet<>();
     }
@@ -114,12 +111,12 @@ public class User extends BasicEntity {
         this.registrationDate = registrationDate;
     }
 
-    public AccountState getAccountState() {
-        return accountState;
+    public AccountStatus getAccountStatus() {
+        return accountStatus;
     }
 
-    public void setAccountState(AccountState accountState) {
-        this.accountState = accountState;
+    public void setAccountStatus(AccountStatus accountStatus) {
+        this.accountStatus = accountStatus;
     }
 
     public Set<UserExercise> getExercises() {

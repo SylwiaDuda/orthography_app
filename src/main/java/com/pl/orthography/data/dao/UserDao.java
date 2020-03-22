@@ -1,6 +1,6 @@
 package com.pl.orthography.data.dao;
 
-import com.pl.orthography.data.entity.AccountState;
+import com.pl.orthography.data.entity.AccountStatus;
 import com.pl.orthography.data.entity.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,9 +14,12 @@ public interface UserDao extends BasicDao<User, Long> {
     User findUserByEmail(String email);
 
     @Modifying
-    @Query("UPDATE User u SET u.accountState=:state WHERE u.email=:email")
-    void updateAccountStateBasedOnEmail(@Param("email") String email,@Param("state") AccountState state);
+    @Query("UPDATE User u SET u.accountStatus=:state WHERE u.email=:email")
+    void updateAccountStateBasedOnEmail(@Param("email") String email,@Param("state") AccountStatus state);
 
     @Query("SELECT u.registrationDate FROM User AS u")
     List<Date> getAllRegistrationDates();
+
+    @Query("SELECT u.accountStatus FROM User AS u")
+    List<AccountStatus> getAllAccountsStatus();
 }

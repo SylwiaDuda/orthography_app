@@ -1,7 +1,7 @@
 package com.pl.orthography.service;
 
 import com.pl.orthography.data.dao.UserDao;
-import com.pl.orthography.data.entity.AccountState;
+import com.pl.orthography.data.entity.AccountStatus;
 import com.pl.orthography.data.entity.User;
 import com.pl.orthography.data.entity.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,8 +60,8 @@ public class UserService {
     }
 
     @Transactional
-    public void updateAccountState(String email, AccountState newAccountState) {
-        userDao.updateAccountStateBasedOnEmail(email, newAccountState);
+    public void updateAccountState(String email, AccountStatus newAccountStatus) {
+        userDao.updateAccountStateBasedOnEmail(email, newAccountStatus);
     }
 
     public TreeMap<String, Long> getDatesToNumberOfRegistration() {
@@ -76,5 +76,11 @@ public class UserService {
                 );
 
         return new TreeMap<>(result);
+    }
+
+    public Map<AccountStatus, Long> getStatusToNumberOfAccounts() {
+        return userDao.getAllAccountsStatus()
+                .stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     }
 }
