@@ -1,10 +1,10 @@
-package com.pl.orthography.rest;
+package com.pl.orthography.rest.usercontroller;
 
 import com.pl.orthography.config.security.authorization.JwtTokenProvider;
 import com.pl.orthography.data.entity.User;
-import com.pl.orthography.rest.responseform.AuthenticationResponse;
-import com.pl.orthography.rest.requestform.AuthenticationForm;
-import com.pl.orthography.rest.requestform.RegistrationForm;
+import com.pl.orthography.rest.usercontroller.jsontemplates.AuthenticationResponse;
+import com.pl.orthography.rest.usercontroller.jsontemplates.AuthenticationForm;
+import com.pl.orthography.rest.usercontroller.jsontemplates.RegistrationForm;
 import com.pl.orthography.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

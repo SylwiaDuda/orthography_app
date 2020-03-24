@@ -1,4 +1,4 @@
-package com.pl.orthography.rest.responseform;
+package com.pl.orthography.rest.usercontroller.jsontemplates;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
