@@ -29,7 +29,40 @@ public class Word extends BasicEntity {
     )
     private Set<Exercise> exerciseContainingWord = new HashSet<>(0);
 
+    public Word() {
+    }
+
     public Word(@NotNull String word) {
         this.word = word;
+    }
+
+    public Word(@NotNull String word, Set<Test> testsContainingWord, Set<Exercise> exerciseContainingWord) {
+        this.word = word;
+        this.testsContainingWord = testsContainingWord;
+        this.exerciseContainingWord = exerciseContainingWord;
+    }
+
+    public String getWord() {
+        return word;
+    }
+
+    public void setWord(String word) {
+        this.word = word;
+    }
+
+    public Set<Test> getTestsContainingWord() {
+        return testsContainingWord;
+    }
+
+    public void setTestsContainingWord(Set<Test> testsContainingWord) {
+        this.testsContainingWord = testsContainingWord;
+    }
+
+    public Set<Exercise> getExerciseContainingWord() {
+        return exerciseContainingWord;
+    }
+
+    public void setExerciseContainingWord(Set<Exercise> exerciseContainingWord) {
+        this.exerciseContainingWord = exerciseContainingWord;
     }
 }

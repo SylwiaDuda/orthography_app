@@ -18,4 +18,36 @@ public class Exercise extends BasicEntity {
 
     @OneToMany(mappedBy = "exercise", fetch = FetchType.EAGER)
     private Set<UserExercise> users = new HashSet<>();
+
+    public Exercise() {
+    }
+
+    public Exercise(@NotNull ExerciseType exerciseType, Set<Word> words) {
+        this.exerciseType = exerciseType;
+        this.words = words;
+    }
+
+    public ExerciseType getExerciseType() {
+        return exerciseType;
+    }
+
+    public void setExerciseType(ExerciseType exerciseType) {
+        this.exerciseType = exerciseType;
+    }
+
+    public Set<Word> getWords() {
+        return words;
+    }
+
+    public void setWords(Set<Word> words) {
+        this.words = words;
+    }
+
+    public Set<UserExercise> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<UserExercise> users) {
+        this.users = users;
+    }
 }
