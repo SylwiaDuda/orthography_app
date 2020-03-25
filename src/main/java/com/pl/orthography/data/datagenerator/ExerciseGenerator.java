@@ -33,53 +33,28 @@ public class ExerciseGenerator {
             }
 
             List<Word> words = wordService.findAllWords();
-            generateExercise(ExerciseType.TYPE_O_U_LEVEL_1, findWordsWithSingleCharacter(words, "[óu]"));
-            generateExercise(ExerciseType.TYPE_O_U_LEVEL_2, findWordsWithDoubleCharacter(words, "[óu]"));
+            ExampleWords exampleWords = new ExampleWords();
 
-            generateExercise(ExerciseType.TYPE_Z_RZ_LEVEL_1, findWordsWithSingleCharacter(words, "ż|rz"));
-            generateExercise(ExerciseType.TYPE_Z_RZ_LEVEL_2, findWordsWithDoubleCharacter(words, "ż|rz"));
+            generateExercise(ExerciseType.TYPE_O_U_LEVEL_1, words, exampleWords.getWordsWithSingleCharacterUO());
+            generateExercise(ExerciseType.TYPE_O_U_LEVEL_2, words, exampleWords.getWordsWithDoubleCharacterUO());
 
-            generateExercise(ExerciseType.TYPE_H_CH_LEVEL_1, findWordsWithSingleCharacter(words, "h"));
-            generateExercise(ExerciseType.TYPE_H_CH_LEVEL_2, findWordsWithDoubleCharacter(words, "h"));
+            generateExercise(ExerciseType.TYPE_Z_RZ_LEVEL_1, words, exampleWords.getWordsWithSingleCharacterZRZ());
+            generateExercise(ExerciseType.TYPE_Z_RZ_LEVEL_2, words, exampleWords.getWordsWithDoubleCharacterZRZ());
+
+            generateExercise(ExerciseType.TYPE_H_CH_LEVEL_1, words, exampleWords.getWordsWithSingleCharacterHCH());
+            generateExercise(ExerciseType.TYPE_H_CH_LEVEL_2, words, exampleWords.getWordsWithDoubleCharacterHCH());
         };
+    }
+
+    private void generateExercise(ExerciseType exerciseType, List<Word> words, List<String> exampleWords) {
+        Set<Word> wordsToSave = words.stream()
+                .filter(word -> exampleWords.contains(word.getWord()))
+                .collect(Collectors.toSet());
+
+        exerciseService.addExercise(new Exercise(exerciseType, wordsToSave));
     }
 
     private boolean shouldGenerateExercise(ExerciseDao exerciseDao, WordDao wordDao) {
         return wordDao.count() != 0L && exerciseDao.count() == 0L;
-    }
-
-    private void generateExercise(ExerciseType exerciseType, Set<Word> words) {
-        Exercise exercise = new Exercise(exerciseType, words);
-        exerciseService.addExercise(exercise);
-    }
-
-    private Set<Word> findWordsWithSingleCharacter(List<Word> words, String regex) {
-        return words.stream()
-                .filter(word -> wordContainsSingleCharacter(word.getWord(), regex))
-                .collect(Collectors.toSet());
-    }
-
-    private boolean wordContainsSingleCharacter(String word, String regex) {
-        return word.split(regex).length == 2;
-    }
-
-    private Set<Word> findWordsWithDoubleCharacter(List<Word> words, String regex) {
-        return words.stream()
-                .filter(word -> wordContainsDoubleCharacter(word.getWord(), regex))
-                .collect(Collectors.toSet());
-    }
-
-    private boolean wordContainsDoubleCharacter(String word, String regex) {
-        return word.split(regex).length == 3;
-    }
-
-    private Set<Word> findWordsWith3Character(List<Word> words, String regex) {
-        return words.stream()
-                .filter(word -> wordContainsDoubleCharacter(word.getWord(), regex))
-                .collect(Collectors.toSet());
-    }
-
-    private boolean wordContains3Character(String word, String regex) {
-        return word.split(regex).length >3;
     }
 }
