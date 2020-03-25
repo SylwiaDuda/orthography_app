@@ -20,10 +20,8 @@ import java.util.Collections;
 public class UserController {
 
     private UserService userService;
-    private final
-    AuthenticationManager authenticationManager;
-    private final
-    JwtTokenProvider jwtTokenProvider;
+    private AuthenticationManager authenticationManager;
+    private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     public UserController(UserService userService, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
@@ -39,7 +37,7 @@ public class UserController {
         User user = userService.findUserByEmailAndPassword(userData.getEmail(), userData.getPassword());
 
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } else {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userData.getEmail(), userData.getPassword()));
             String token = jwtTokenProvider.createToken(userData.getEmail(), Collections.singletonList(user.getRole().name()));
@@ -51,12 +49,14 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "register", produces = "application/json", consumes = "application/json", method = RequestMethod.POST)
     public ResponseEntity register(@RequestBody RegistrationForm registrationData) {
+
         if (userService.findUserByEmail(registrationData.getEmail()) != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The user with the e-mail address already exists");
         }
 
         User createdUser = userService.createUserAccount(registrationData.getUserName(), registrationData.getEmail(), registrationData.getPassword());
         HttpStatus httpStatus = createdUser != null ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR;
-        return ResponseEntity.status(httpStatus).body(null);
+
+        return ResponseEntity.status(httpStatus).build();
     }
 }
