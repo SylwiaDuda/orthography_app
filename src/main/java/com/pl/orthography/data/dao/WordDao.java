@@ -1,10 +1,9 @@
 package com.pl.orthography.data.dao;
 
-        import com.pl.orthography.data.entity.Word;
-        import org.springframework.data.jpa.repository.Query;
+import com.pl.orthography.data.entity.Word;
+import org.springframework.data.jpa.repository.Query;
 
-        import java.util.List;
-
+import java.util.List;
 
 public interface WordDao extends BasicDao<Word, Long> {
 
