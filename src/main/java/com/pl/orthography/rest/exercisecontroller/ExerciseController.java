@@ -40,7 +40,7 @@ public class ExerciseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "getexercise", produces = "application/json", consumes = "application/json", method = RequestMethod.POST)
+    @RequestMapping(value = "getwords", produces = "application/json", consumes = "application/json", method = RequestMethod.POST)
     public ResponseEntity getExercise(@RequestBody ExerciseRequestForm form) {
 
         try {
