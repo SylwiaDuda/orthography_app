@@ -45,6 +45,10 @@ public class UserService {
         return userDao.findAll();
     }
 
+    public User save(User user) {
+        return userDao.saveAndFlush(user);
+    }
+
     @Transactional
     public User createUserAccount(String userName, String email, String password) {
         String encodedPassword = passwordEncoder.encode(password);
@@ -68,12 +72,8 @@ public class UserService {
         List<Date> registrationDates = userDao.getAllRegistrationDates();
         List<String> dates = new ArrayList<>();
         registrationDates.forEach(date -> dates.add(new SimpleDateFormat("dd/MM/yyyy").format(date)));
-        Map<String, Long> result =
-                dates.stream().collect(
-                        Collectors.groupingBy(
-                                Function.identity(), Collectors.counting()
-                        )
-                );
+        Map<String, Long> result = dates.stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
         return new TreeMap<>(result);
     }
