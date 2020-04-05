@@ -1,6 +1,5 @@
 package com.pl.orthography.ui;
 
-import com.pl.orthography.data.entity.AccountStatus;
 import com.pl.orthography.service.UserService;
 import com.pl.orthography.ui.statisticslayout.AccountsStatistics;
 import com.pl.orthography.ui.statisticslayout.StatisticType;

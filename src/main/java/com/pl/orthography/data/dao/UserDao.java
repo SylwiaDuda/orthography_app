@@ -12,6 +12,7 @@ import java.util.List;
 public interface UserDao extends BasicDao<User, Long> {
 
     User findUserByEmail(String email);
+    User findUserById(Long id);
 
     @Modifying
     @Query("UPDATE User u SET u.accountStatus=:state WHERE u.email=:email")
