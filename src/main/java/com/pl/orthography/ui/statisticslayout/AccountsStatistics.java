@@ -21,7 +21,6 @@ public class AccountsStatistics extends Div {
 
     private UserService userService;
 
-    @Autowired
     public AccountsStatistics(UserService userService) {
         this.userService = userService;
 

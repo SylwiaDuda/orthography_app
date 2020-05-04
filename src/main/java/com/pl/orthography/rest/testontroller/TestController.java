@@ -2,8 +2,10 @@ package com.pl.orthography.rest.testontroller;
 
 import com.pl.orthography.config.security.authorization.InvalidJwtAuthenticationException;
 import com.pl.orthography.config.security.authorization.JwtTokenProvider;
+import com.pl.orthography.exception.TestException;
+import com.pl.orthography.exception.UserException;
 import com.pl.orthography.rest.BasicRequestForm;
-import com.pl.orthography.service.TestService;
+import com.pl.orthography.rest.testontroller.jsontemplates.TestResultForm;
 import com.pl.orthography.service.UserTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +28,7 @@ public class TestController {
 
     @ResponseBody
     @RequestMapping(value = "get", produces = "application/json", consumes = "application/json", method = RequestMethod.POST)
-    public ResponseEntity getExercise(@RequestBody BasicRequestForm basicRequestForm) {
+    public ResponseEntity getTest(@RequestBody BasicRequestForm basicRequestForm) {
 
         try {
             String token = basicRequestForm.getToken();
@@ -36,6 +38,24 @@ public class TestController {
             return ResponseEntity.status(HttpStatus.OK).body(userTestService.findUserTests(email));
         } catch (InvalidJwtAuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "saveresult", produces = "application/json", consumes = "application/json", method = RequestMethod.POST)
+    public ResponseEntity saveResult(@RequestBody TestResultForm testResultForm) {
+
+        try {
+            String token = testResultForm.getToken();
+            jwtTokenProvider.validateToken(token);
+            String email = jwtTokenProvider.getUsername(token);
+
+            userTestService.saveResult(email, testResultForm);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (InvalidJwtAuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } catch (TestException | UserException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 }

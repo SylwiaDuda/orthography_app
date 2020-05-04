@@ -29,7 +29,7 @@ public class ExerciseController {
 
     @ResponseBody
     @RequestMapping(value = "gettypes", produces = "application/json", consumes = "application/json", method = RequestMethod.POST)
-    public ResponseEntity getExercise(@RequestBody BasicRequestForm basicRequestForm) {
+    public ResponseEntity getExerciseTypes(@RequestBody BasicRequestForm basicRequestForm) {
 
         try {
             jwtTokenProvider.validateToken(basicRequestForm.getToken());

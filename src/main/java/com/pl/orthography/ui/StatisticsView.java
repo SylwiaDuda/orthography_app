@@ -20,11 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 @PageTitle("Statistics")
 public class StatisticsView extends Div implements AfterNavigationObserver {
 
-    VerticalLayout statisticTypeLayout;
-
+    private VerticalLayout statisticTypeLayout;
     private UserService userService;
 
-    @Autowired
     public StatisticsView(UserService userService) {
         this.userService = userService;
 

@@ -5,12 +5,16 @@ import com.pl.orthography.data.dto.TestDto;
 import com.pl.orthography.data.entity.Test;
 import com.pl.orthography.data.entity.User;
 import com.pl.orthography.data.entity.UserTest;
+import com.pl.orthography.exception.TestException;
+import com.pl.orthography.exception.UserException;
+import com.pl.orthography.rest.testontroller.jsontemplates.TestResultForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +29,21 @@ public class UserTestService {
         this.userTestDao = userTestDao;
         this.testService = testService;
         this.userService = userService;
+    }
+
+    public void saveResult(String email, TestResultForm testResultForm) throws UserException, TestException {
+        User user = userService.findUserByEmail(email);
+
+        if (user == null) {
+            throw new UserException("User with e-mail address doesn't exist: " + email);
+        }
+
+        Optional<Test> test = testService.findById(testResultForm.getTestId());
+        if (test.isPresent()) {
+            saveUserTest(user, test.get(), testResultForm.getGainedPoints(), new Date(testResultForm.getDate()));
+        } else {
+            throw new TestException("Test with ths id doesn't exist: " + testResultForm.getTestId());
+        }
     }
 
     public void saveUserTest(User user, Test test, int points, Date date) {
