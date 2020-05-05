@@ -2,17 +2,18 @@ package com.pl.orthography.service;
 
 import com.pl.orthography.data.dao.UserTestDao;
 import com.pl.orthography.data.dto.TestDto;
+import com.pl.orthography.data.dto.UserTestDto;
 import com.pl.orthography.data.entity.Test;
 import com.pl.orthography.data.entity.User;
 import com.pl.orthography.data.entity.UserTest;
 import com.pl.orthography.exception.TestException;
 import com.pl.orthography.exception.UserException;
-import com.pl.orthography.rest.testontroller.jsontemplates.TestResultForm;
+import com.pl.orthography.rest.testontroller.jsontemplates.TestResultDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,22 +32,22 @@ public class UserTestService {
         this.userService = userService;
     }
 
-    public void saveResult(String email, TestResultForm testResultForm) throws UserException, TestException {
+    public void saveResult(String email, TestResultDto testResultDto) throws UserException, TestException {
         User user = userService.findUserByEmail(email);
 
         if (user == null) {
             throw new UserException("User with e-mail address doesn't exist: " + email);
         }
 
-        Optional<Test> test = testService.findById(testResultForm.getTestId());
+        Optional<Test> test = testService.findById(testResultDto.getTestId());
         if (test.isPresent()) {
-            saveUserTest(user, test.get(), testResultForm.getGainedPoints(), new Date(testResultForm.getDate()));
+            saveUserTest(user, test.get(), testResultDto.getGainedPoints(), testResultDto.getDate());
         } else {
-            throw new TestException("Test with ths id doesn't exist: " + testResultForm.getTestId());
+            throw new TestException("Test with ths id doesn't exist: " + testResultDto.getTestId());
         }
     }
 
-    public void saveUserTest(User user, Test test, int points, Date date) {
+    public void saveUserTest(User user, Test test, int points, LocalDateTime date) {
         UserTest userTest = new UserTest(user, test, points, date);
         UserTest savedUserTest = userTestDao.saveAndFlush(userTest);
 
@@ -72,5 +73,13 @@ public class UserTestService {
         Integer points = userTestDao.findGainedPointsForTest(user, testId);
 
         return points == null ? 0 : points;
+    }
+
+    public LocalDateTime findLastDateTest(String email) {
+        return userTestDao.findLastDateTest(userService.findUserByEmail(email));
+    }
+
+    public List<UserTestDto> findTestAfterDate(String email, LocalDateTime dateTime) {
+        return userTestDao.findTestAfterDate(userService.findUserByEmail(email), dateTime);
     }
 }

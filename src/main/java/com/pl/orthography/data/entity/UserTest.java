@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -32,5 +33,5 @@ public class UserTest extends BasicEntity {
     private int points;
 
     @NotNull
-    private Date date;
+    private LocalDateTime date;
 }

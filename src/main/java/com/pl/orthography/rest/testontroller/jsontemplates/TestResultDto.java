@@ -1,13 +1,14 @@
 package com.pl.orthography.rest.testontroller.jsontemplates;
 
-import com.pl.orthography.rest.BasicRequestForm;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @Getter
-public class TestResultForm extends BasicRequestForm {
+public class TestResultDto {
     private Long testId;
-    private String date;
+    private LocalDateTime date;
     private int gainedPoints;
 }

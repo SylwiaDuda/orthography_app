@@ -1,7 +1,7 @@
 package com.pl.orthography.data.dto;
 
-        import lombok.Getter;
-        import lombok.Setter;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
