@@ -1,8 +1,10 @@
 package com.pl.orthography.ui;
 
 import com.pl.orthography.service.UserService;
+import com.pl.orthography.service.UserTestService;
 import com.pl.orthography.ui.statisticslayout.AccountsStatistics;
 import com.pl.orthography.ui.statisticslayout.StatisticType;
+import com.pl.orthography.ui.statisticslayout.TestStatistics;
 import com.pl.orthography.ui.statisticslayout.UserRegistrationsPerDay;
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.Component;
@@ -14,7 +16,6 @@ import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Route(value = "statistics", layout = MainView.class)
 @PageTitle("Statistics")
@@ -22,9 +23,11 @@ public class StatisticsView extends Div implements AfterNavigationObserver {
 
     private VerticalLayout statisticTypeLayout;
     private UserService userService;
+    private UserTestService userTestService;
 
-    public StatisticsView(UserService userService) {
+    public StatisticsView(UserService userService, UserTestService userTestService) {
         this.userService = userService;
+        this.userTestService = userTestService;
 
         createStatisticTypeComboBox();
 
@@ -61,6 +64,8 @@ public class StatisticsView extends Div implements AfterNavigationObserver {
                 return new AccountsStatistics(userService);
             case USER_REGISTRATION_PER_DAY:
                 return new UserRegistrationsPerDay(userService);
+            case NUMBER_OF_TESTS_SOLVED_PER_DAY:
+                return new TestStatistics(userTestService);
             default:
                 throw new IllegalStateException("Unexpected value: " + value);
         }

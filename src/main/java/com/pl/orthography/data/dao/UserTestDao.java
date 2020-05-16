@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -22,4 +23,7 @@ public interface UserTestDao extends BasicDao<UserTest, Long> {
 
     @Query("SELECT ut.test.id as testId, ut.points as points, ut.date as date FROM UserTest ut WHERE ut.user=:user AND ut.date>:date")
     List<UserTestDto> findTestAfterDate(@Param("user") User user, @Param("date") LocalDateTime date);
+
+    @Query("SELECT u.date FROM UserTest AS u")
+    List<LocalDateTime> getAllTestDates();
 }

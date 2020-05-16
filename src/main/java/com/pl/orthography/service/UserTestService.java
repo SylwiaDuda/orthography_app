@@ -3,6 +3,7 @@ package com.pl.orthography.service;
 import com.pl.orthography.data.dao.UserTestDao;
 import com.pl.orthography.data.dto.TestDto;
 import com.pl.orthography.data.dto.UserTestDto;
+import com.pl.orthography.data.entity.AccountStatus;
 import com.pl.orthography.data.entity.Test;
 import com.pl.orthography.data.entity.User;
 import com.pl.orthography.data.entity.UserTest;
@@ -13,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -81,5 +84,15 @@ public class UserTestService {
 
     public List<UserTestDto> findTestAfterDate(String email, LocalDateTime dateTime) {
         return userTestDao.findTestAfterDate(userService.findUserByEmail(email), dateTime);
+    }
+
+    public TreeMap<String, Long> getDatesToNumberOfTests() {
+        List<LocalDateTime> registrationDates = userTestDao.getAllTestDates();
+        List<String> dates = new ArrayList<>();
+        registrationDates.forEach(date -> dates.add(date.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+        Map<String, Long> result = dates.stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+        return new TreeMap<>(result);
     }
 }
