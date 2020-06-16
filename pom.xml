@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <vaadin.version>14.1.5</vaadin.version>
+        <vaadin.version>14.1.17</vaadin.version>
 
         <drivers.dir>${project.basedir}/drivers</drivers.dir>
         <drivers.downloader.phase>pre-integration-test</drivers.downloader.phase>
@@ -28,7 +28,6 @@
 
     <repositories>
         <!-- The order of definitions matters. Explicitly defining central here to make sure it has the highest priority. -->
-
         <!-- Main Maven repository -->
         <repository>
             <id>central</id>
@@ -124,6 +123,61 @@
             <artifactId>vaadin-testbench</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-login-flow</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-form-layout-flow</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-server</artifactId>
+            <version>8.10.1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.10</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-ordered-layout-flow</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.appreciated</groupId>
+            <artifactId>apexcharts</artifactId>
+            <version>2.0.0.beta8</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-date-picker-flow</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -194,9 +248,16 @@
                     <execution>
                         <id>copy-dependencies</id>
                         <phase>package</phase>
-                        <goals><goal>copy-dependencies</goal></goals>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.0.2.Final</version>
             </plugin>
         </plugins>
     </build>
